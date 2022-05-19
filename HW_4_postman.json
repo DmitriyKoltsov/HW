@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0c545f78-694b-4900-a7f7-0ab453a00243",
+		"_postman_id": "16844aab-9b06-406c-9370-5f291cce79bf",
 		"name": "HW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -173,7 +173,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://162.55.220.72:5007/user_info_3",
+					"raw": "http://162.55.220.72:5005/user_info_3",
 					"protocol": "http",
 					"host": [
 						"162",
@@ -181,7 +181,7 @@
 						"220",
 						"72"
 					],
-					"port": "5007",
+					"port": "5005",
 					"path": [
 						"user_info_3"
 					]
@@ -279,7 +279,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://162.55.220.72:5007/object_info_3?name=Dmitriy&age=37&salary=100500",
+					"raw": "http://162.55.220.72:5005/object_info_3?name=Dmitriy&age=37&salary=100500",
 					"protocol": "http",
 					"host": [
 						"162",
@@ -287,7 +287,7 @@
 						"220",
 						"72"
 					],
-					"port": "5007",
+					"port": "5005",
 					"path": [
 						"object_info_3"
 					],
@@ -366,7 +366,7 @@
 							"console.log(jsonResponse.salary[0])\r",
 							"\r",
 							"\r",
-							"    //Вывести в консоль 1-й элемент параметра salary параметр salary из response\r",
+							"     //Вывести в консоль 1-й элемент параметра salary параметр salary из response\r",
 							"console.log(jsonResponse.salary[1])\r",
 							"\r",
 							"\r",
@@ -388,14 +388,28 @@
 							"\r",
 							"    //Проверить, что 1-й элемент параметра salary равен salary*2 из request (salary забрать из request.)\r",
 							"let jsonResponseSalary_1 = Number(jsonResponse.salary[1])\r",
-							"let jsonResponse_Salary_1 = jsonReqeustSalary * 2\r",
 							"\r",
 							"pm.test(\"The 1st element of the salary parameter is equal to salary*2 from request\", function () {\r",
-							"    pm.expect(jsonResponse.salary_1).to.eql(jsonReqeust_Salary_1);\r",
+							"    pm.expect(jsonResponseSalary_1).to.eql(jsonReqeust_Salary * 2);\r",
 							"});\r",
 							"\r",
-							"console.log(jsonReqeus_Salary_1)\r",
-							"// console.log(typeof(jsonResponseSalary_1))"
+							"console.log(jsonResponse.salary[1])\r",
+							"console.log(typeof(jsonResponseSalary_1))\r",
+							"\r",
+							"\r",
+							"    // Проверить, что 2-й элемент параметра salary равен salary*3 из request (salary забрать из request.)\r",
+							"let jsonResponseSalary_2 = Number(jsonResponse.salary[2])\r",
+							"\r",
+							"pm.test(\"The 2st element of the salary parameter is equal to salary*3 from request\", function () {\r",
+							"    pm.expect(jsonResponseSalary_2).to.eql(jsonReqeust_Salary * 3);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"    //Написать цикл который выведет в консоль по порядку элементы списка из параметра salary\r",
+							"let salary_array = jsonResponse.salary\r",
+							"for (let i = 0; i < salary_array.length; i++){\r",
+							"    console.log(salary_array[i])\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -429,6 +443,146 @@
 						{
 							"key": "salary",
 							"value": "100500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "object_info_4_Environments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    //Статус код 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"    //Спарсить response body в json\r",
+							"let jsonResponse = pm.response.json();\r",
+							"console.log(jsonResponse)\r",
+							"\r",
+							"\r",
+							"    //Спарсить request\r",
+							"let jsonReqeust = pm.request.url.query.all()\r",
+							"console.log(jsonReqeust)\r",
+							"\r",
+							"\r",
+							"    // Проверить, что name в ответе равно name s request (name забрать из request.)\r",
+							"let jsonReqeustName = pm.request.url.query.get(\"name\")\r",
+							"console.log(jsonReqeustName)\r",
+							"console.log(jsonResponse.name)\r",
+							"\r",
+							"pm.test(\"name in response is equal to name in request\", function () {\r",
+							"    pm.expect(jsonResponse.name).to.eql(jsonReqeustName);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"    //Проверить, что age в ответе равно age из request (age забрать из request.)\r",
+							"let jsonReqeustAge = pm.request.url.query.get(\"age\")\r",
+							"let jsonReqeust_Age = Number(jsonReqeustAge)\r",
+							"console.log(jsonReqeust_Age)\r",
+							"console.log(jsonResponse.age)\r",
+							"\r",
+							"pm.test(\"name in response is equal to name in request\", function () {\r",
+							"    pm.expect(jsonResponse.age).to.eql(jsonReqeust_Age);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"    //Вывести в консоль параметр salary из request\r",
+							"let jsonReqeustSalary = pm.request.url.query.get(\"salary\")\r",
+							"console.log(jsonReqeustSalary)\r",
+							"\r",
+							"\r",
+							"    //Вывести в консоль параметр salary из response\r",
+							"console.log(jsonResponse.salary)\r",
+							"\r",
+							"\r",
+							"    //Вывести в консоль 0-й элемент параметра salary из response\r",
+							"console.log(jsonResponse.salary[0])\r",
+							"\r",
+							"\r",
+							"     //Вывести в консоль 1-й элемент параметра salary параметр salary из response\r",
+							"console.log(jsonResponse.salary[1])\r",
+							"\r",
+							"\r",
+							"    //Вывести в консоль 2-й элемент параметра salary параметр salary из response\r",
+							"console.log(jsonResponse.salary[2])\r",
+							"\r",
+							"\r",
+							"    //Проверить, что 0-й элемент параметра salary равен salary из request (salary забрать из request.)\r",
+							"let jsonReqeust_Salary = Number(jsonReqeustSalary)\r",
+							"\r",
+							"\r",
+							"pm.test(\"The 0th element of the salary parameter is equal to the salary from request\", function () {\r",
+							"    pm.expect(jsonResponse.salary[0]).to.eql(jsonReqeust_Salary);\r",
+							"});\r",
+							"\r",
+							"console.log(typeof(jsonResponse.salary[0]))\r",
+							"console.log(typeof(jsonReqeust_Salary))\r",
+							"\r",
+							"\r",
+							"    //Проверить, что 1-й элемент параметра salary равен salary*2 из request (salary забрать из request.)\r",
+							"let jsonResponseSalary_1 = Number(jsonResponse.salary[1])\r",
+							"\r",
+							"pm.test(\"The 1st element of the salary parameter is equal to salary*2 from request\", function () {\r",
+							"    pm.expect(jsonResponseSalary_1).to.eql(jsonReqeust_Salary * 2);\r",
+							"});\r",
+							"\r",
+							"console.log(jsonResponse.salary[1])\r",
+							"console.log(typeof(jsonResponseSalary_1))\r",
+							"\r",
+							"\r",
+							"    // Проверить, что 2-й элемент параметра salary равен salary*3 из request (salary забрать из request.)\r",
+							"let jsonResponseSalary_2 = Number(jsonResponse.salary[2])\r",
+							"\r",
+							"pm.test(\"The 2st element of the salary parameter is equal to salary*3 from request\", function () {\r",
+							"    pm.expect(jsonResponseSalary_2).to.eql(jsonReqeust_Salary * 3);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"    //Написать цикл который выведет в консоль по порядку элементы списка из параметра salary\r",
+							"let salary_array = jsonResponse.salary\r",
+							"for (let i = 0; i < salary_array.length; i++){\r",
+							"    console.log(salary_array[i])\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://162.55.220.72:5005/object_info_4?name={{name}}&age={{age}}&salary={{salary}}",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"object_info_4"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{name}}"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}"
 						}
 					]
 				}
